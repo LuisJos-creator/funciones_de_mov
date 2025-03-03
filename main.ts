@@ -1,40 +1,60 @@
+radio.onReceivedNumber(function (receivedNumber) {
+    mov = receivedNumber
+})
 function Izquierda () {
-    motorbit.brake()
-    basic.pause(100)
     motorbit.freestyle(50, -56)
-    basic.pause(1000)
-    motorbit.brake()
 }
 function Adelante () {
-    motorbit.brake()
-    basic.pause(100)
     motorbit.freestyle(50, 56)
-    basic.pause(1000)
-    motorbit.brake()
 }
 input.onButtonPressed(Button.A, function () {
-    Adelante()
-    basic.pause(100)
-    Atrás()
-    basic.pause(100)
-    Izquierda()
-    basic.pause(100)
-    Derecha()
+    if (input.buttonIsPressed(Button.A)) {
+        radio.sendNumber(1)
+    } else {
+        radio.sendNumber(0)
+    }
 })
 function Atrás () {
-    motorbit.brake()
-    basic.pause(100)
     motorbit.freestyle(-50, -56)
-    basic.pause(1000)
-    motorbit.brake()
 }
+input.onButtonPressed(Button.AB, function () {
+    if (input.buttonIsPressed(Button.AB)) {
+        radio.sendNumber(3)
+    } else {
+        radio.sendNumber(0)
+    }
+})
 function Derecha () {
-    motorbit.brake()
-    basic.pause(100)
     motorbit.freestyle(-50, 56)
-    basic.pause(1000)
-    motorbit.brake()
 }
+input.onButtonPressed(Button.B, function () {
+    if (input.buttonIsPressed(Button.B)) {
+        radio.sendNumber(2)
+    } else {
+        radio.sendNumber(0)
+    }
+})
+input.onGesture(Gesture.ThreeG, function () {
+    if (input.isGesture(Gesture.ThreeG)) {
+        radio.sendNumber(4)
+    } else {
+        radio.sendNumber(0)
+    }
+})
+let mov = 0
+radio.setGroup(1)
 basic.forever(function () {
-	
+    if (mov == 1) {
+        Izquierda()
+    } else if (mov == 2) {
+        Derecha()
+    } else if (mov == 3) {
+        Adelante()
+    } else if (mov == 4) {
+        motorbit.brake()
+    } else if (mov == 0) {
+        motorbit.brake()
+    } else {
+    	
+    }
 })
